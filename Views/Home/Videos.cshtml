@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Videos";
+}
+@model IEnumerable<YourNamespace.Models.Video>
+
+
+<h2>Videos</h2>
+
+
+<div class="row">
+    @foreach (var video in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="@video.ThumbnailUrl" class="card-img-top" alt="Video Thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title">@video.Title</h5>
+                    <p class="card-text">@video.Description</p>
+                    <p class="card-text"><small class="text-muted">@video.UploadDate.ToString("MMM dd, yyyy")</small></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
