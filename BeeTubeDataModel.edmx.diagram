@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c0a4e6c47e114f82b1df4d39543880b1" Name="Diagram1">
+        <EntityTypeShape EntityType="BeeTubeModel.Category" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeeTubeModel.Comment" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeeTubeModel.Role" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeeTubeModel.UserClaim" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeeTubeModel.UserLogin" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeeTubeModel.User" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BeeTubeModel.Video" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="BeeTubeModel.FK_Videos_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="BeeTubeModel.FK_Comments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BeeTubeModel.FK_Comments_Videos" ManuallyRouted="false" />
+        <AssociationConnector Association="BeeTubeModel.FK_dbo_UserClaims_dbo_Users_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="BeeTubeModel.FK_dbo_UserLogins_dbo_Users_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="BeeTubeModel.UserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BeeTubeModel.C__MigrationHistory" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="BeeTubeModel.FK_Videos_Users_CreatorId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

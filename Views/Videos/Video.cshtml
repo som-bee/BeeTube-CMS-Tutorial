@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewBag.Title = "Video";
+}
+
+@model BeeTube.Models.VideoViewModel
+<style>
+    .video-container {
+        width: 100%;
+        height: 100vh;
+    }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+        }
+
+    .comments-section {
+        margin-top: 20px;
+    }
+
+    .comment {
+        margin-bottom: 10px;
+    }
+
+        .comment .author {
+            font-weight: bold;
+        }
+
+        .comment .content {
+            margin-top: 5px;
+        }
+    /* styles.css */
+
+    .comment-section {
+        margin-top: 20px;
+    }
+
+    .comment {
+        margin-bottom: 10px;
+    }
+
+        .comment .author {
+            font-weight: bold;
+        }
+
+        .comment .content {
+            margin-top: 5px;
+        }
+
+        .comment .timestamp {
+            color: #888;
+            font-size: 0.8em;
+        }
+
+    .comment-form {
+        margin-top: 20px;
+    }
+
+        .comment-form .form-group {
+            margin-bottom: 10px;
+        }
+    /* styles.css */
+
+    .comment-section {
+        margin-top: 20px;
+    }
+
+    .comment-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+        .comment-box textarea {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-bottom: 1px solid #e0e0e0;
+            resize: none;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+            .comment-box textarea:focus {
+                outline: none;
+                border-bottom: 1px solid #2962ff;
+            }
+
+        .comment-box .btn {
+            margin-top: 10px;
+        }
+    .comment-date{
+        padding-left:20px;
+    }
+</style>
+
+<div>
+
+    <video controls style="height: 80vh;">
+        <source src="@Model.Video.FilePath" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h4>@Model.Video.Title</h4>
+    <p>
+        @if (@Model.Video.User != null)
+        {@Model.Video.User.UserName}
+    else
+    {
+        string userName = "annonymous user "; @userName} on @DateTime.Parse(@Model.Video.UploadDate.ToString()).ToString("D")
+    </p>
+
+    <p>@Model.Video.Description</p>
+    <hr />
+    <div class="comments-section" >
+        <div class="comment-form comment-box">
+            @using (Html.BeginForm("AddComment", "Videos", FormMethod.Post, new { id = "addCommentForm" }))
+            {
+                //{Model.Comment.VideoID = Model.Video.Id;} <!-- Hidden field to store the video ID -->
+                @Html.HiddenFor(m => m.Comment.VideoID)
+                <div class="form-group">
+                    @Html.TextAreaFor(m => m.Comment.Content, new { @class = "form-control", rows = 1 ,placeholder = "Add a comment..." })
+                    @Html.ValidationMessageFor(m => m.Comment.Content)
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Add Comment" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+        <br />
+        <div id="commentSection">
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment">
+                    <span class="author">@comment.User.UserName</span>
+                    <span class="comment-date">@comment.CreatedAt.ToLongDateString()</span>
+                    <div class="content">@comment.Content</div>
+                </div>
+            }
+        </div>
+       
+    </div>
+
+
+</div>
+
+
+
+<script>
+    $(function () {
+        $('#addCommentForm').submit(function (event) {
+           
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            var form = $(this);
+            var url = form.attr('action');
+            var formData = form.serialize();
+            
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                       
+                        // Comment added successfully, update the comment section
+                        // with the new comment without refreshing the page
+                        // Comment added successfully, update the comment section
+                        var comment = response.comment;
+
+                        // Create a new comment HTML element
+                        var commentHtml = '<div class="comment">';
+                        commentHtml += '<div class="comment-details">';
+                        commentHtml += '<span class="author">' + comment.author + '</span>';
+                        commentHtml += '<span class="comment-date">' + comment.date + '</span>';
+                        commentHtml += '<p class-"content">' + comment.content + '</p>';
+                        
+                        commentHtml += '</div>';
+                        commentHtml += '</div>';
+                       
+                        // Append the new comment to the comment section
+                        $('#commentSection').prepend(commentHtml);
+
+                            // Clear the comment text area
+                            form.find('textarea').val('');
+
+                       
+                    } else {
+                        console.log("Comment note added..!")
+                        console.log(response.errors)
+                        // Handle the case where the comment was not added successfully
+                        // Display an error message or perform any other necessary action
+                    }
+                },
+                error: function () {
+                    // Handle any error that occurred during the AJAX request
+                }
+            });
+        });
+    });
+</script>

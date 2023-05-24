@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace BeeTube.Controllers
 {
     public class HomeController : Controller
@@ -23,8 +24,12 @@ namespace BeeTube.Controllers
         public ActionResult Videos()
         {
             ViewBag.Message = "Videos for you";
-
-            return View();
+            using(var context = new BeeTubeEntities())
+            {
+                var videos = context.Videos.ToList();
+                return View(videos);
+            }
+            
         }
 
         public ActionResult Contact()

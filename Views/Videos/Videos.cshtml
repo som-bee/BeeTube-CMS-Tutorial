@@ -2,10 +2,9 @@
 @{
     ViewBag.Title = "Videos";
 }
-@model IEnumerable<YourNamespace.Models.Video>
+@model IEnumerable<BeeTube.Video>
 
-
-<h2>Videos</h2>
+<br />
 
 
 <div class="row">
@@ -13,11 +12,13 @@
     {
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="@video.ThumbnailUrl" class="card-img-top" alt="Video Thumbnail">
+                <a href="~/video?id=@video.Id">
+                    <img src="/@video.ThumbnailUrl" class="card-img-top" alt="Video Thumbnail">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">@video.Title</h5>
                     <p class="card-text">@video.Description</p>
-                    <p class="card-text"><small class="text-muted">@video.UploadDate.ToString("MMM dd, yyyy")</small></p>
+                    <p class="card-text"><small class="text-muted">@video.UploadDate</small></p>
                 </div>
             </div>
         </div>

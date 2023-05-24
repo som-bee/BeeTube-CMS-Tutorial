@@ -76,5 +76,5 @@ _[Ss]cripts
 ###################
 # compiled source #
 ###################
-./Uoloads/video-files/*.mp4
-./Uoloads/video-thumbnails/*.jpg
+Uploads/video-files/*.mp4
+Uploads/video-thumbnails/*.jpg
