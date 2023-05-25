@@ -37,18 +37,28 @@
     <div class="form-group">
         @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" }, Value = Model.DOB })
+            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control datepicker" } })
             @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
         </div>
     </div>
 
+    
+
     <div class="form-group">
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" }, Value = Model.Gender })
+            <div class="radio-container">
+                @Html.RadioButtonFor(model => model.Gender, "Male") Male
+            </div>
+            <div class="radio-container">
+                @Html.RadioButtonFor(model => model.Gender, "Female") Female
+            </div>
             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -72,4 +82,21 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" />
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy-mm-dd",  // Set the display format for the datepicker
+                altFormat: "yy-mm-dd",  // Set the format for the alternate field value
+                changeYear: true,  // Enable year dropdown
+                changeMonth: true,
+                yearRange: "1900:" + (new Date().getFullYear())  // Set the range of selectable years
+            });
+        });
+    </script>
 }
+
+
