@@ -33,5 +33,6 @@ namespace BeeTube
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
     }
 }

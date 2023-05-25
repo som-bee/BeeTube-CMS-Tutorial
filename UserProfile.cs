@@ -12,15 +12,16 @@ namespace BeeTube
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class UserProfile
     {
         public int Id { get; set; }
-        public int VideoID { get; set; }
-        public string UserID { get; set; }
-        public string Content { get; set; }
-        public System.DateTime CreatedAt { get; set; }
+        public string UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public string Gender { get; set; }
+        public string Country { get; set; }
     
         public virtual User User { get; set; }
-        public virtual Video Video { get; set; }
     }
 }

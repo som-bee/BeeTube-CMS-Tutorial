@@ -221,6 +221,9 @@
     <Compile Include="UserLogin.cs">
       <DependentUpon>BeeTubeDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>BeeTubeDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Video.cs">
       <DependentUpon>BeeTubeDataModel.tt</DependentUpon>
     </Compile>
@@ -318,12 +321,13 @@
     <Content Include="Views\Videos\UploadVideo.cshtml" />
     <Content Include="Views\Videos\UploadSuccess.cshtml" />
     <Content Include="Views\Videos\Categories.cshtml" />
+    <Content Include="Views\Creator\Dashboard.cshtml" />
+    <Content Include="Views\Creator\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\video-files\" />
     <Folder Include="Uploads\video-thumbnails\" />
-    <Folder Include="Views\Creator\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

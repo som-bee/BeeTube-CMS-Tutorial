@@ -20,6 +20,8 @@
         <AssociationConnector Association="BeeTubeModel.UserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="BeeTubeModel.C__MigrationHistory" Width="1.5" PointX="5.375" PointY="0.75" />
         <AssociationConnector Association="BeeTubeModel.FK_Videos_Users_CreatorId" />
+        <EntityTypeShape EntityType="BeeTubeModel.UserProfile" Width="1.5" PointX="5.25" PointY="14.125" />
+        <AssociationConnector Association="BeeTubeModel.FK_UserProfile_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

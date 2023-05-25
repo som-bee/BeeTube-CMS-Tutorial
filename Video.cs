@@ -11,8 +11,7 @@ namespace BeeTube
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Video
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,18 +21,12 @@ namespace BeeTube
         }
     
         public int Id { get; set; }
-        [Required]
         public string Title { get; set; }
-        [Required]
         public string Description { get; set; }
         public Nullable<System.TimeSpan> Duration { get; set; }
         public Nullable<System.DateTime> UploadDate { get; set; }
-
-        [Required]
         public string FilePath { get; set; }
         public Nullable<int> CategoryID { get; set; }
-
-        [Required]
         public string ThumbnailUrl { get; set; }
         public string CreatorId { get; set; }
     
