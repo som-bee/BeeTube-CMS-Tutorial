@@ -78,3 +78,4 @@ _[Ss]cripts
 ###################
 Uploads/video-files/*.mp4
 Uploads/video-thumbnails/*.jpg
+.vs/BeeTube/FileContentIndex/*
