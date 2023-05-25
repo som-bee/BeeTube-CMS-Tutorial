@@ -26,6 +26,7 @@ namespace BeeTube.Controllers
         {
             using (var context = new BeeTubeEntities())
             {
+                ViewBag.VideoCategory = "all";
                 var videos = context.Videos.ToList();
                 return View(videos);
             }
@@ -183,6 +184,47 @@ namespace BeeTube.Controllers
             }
 
         }
+
+        [HttpGet]
+        [Route("video/categories")]
+        public ActionResult Categories()
+        {
+
+            using (var dbContext = new BeeTubeEntities())
+            {
+                // Assuming you have a database context named 'dbContext' and a 'Category' entity
+                List<Category> categories = dbContext.Categories.ToList();
+
+                return View(categories);
+
+            }
+            return View();
+               
+        }
+
+        [HttpGet]
+        [Route("videos/category/{id}")]
+        public ActionResult CategoryVideos(int id)
+        {
+            using (var dbContext = new BeeTubeEntities())
+            {
+                var category = dbContext.Categories.Include("Videos").FirstOrDefault(c => c.Id == id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.VideoCategory = category.Name;
+                var videos = category.Videos.ToList();
+
+                return View("Videos",videos);
+            }
+        }
+
+
+
+
+
+
 
 
         public Video GetVideoByVideoId(int videoId)

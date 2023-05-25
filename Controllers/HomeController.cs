@@ -11,7 +11,8 @@ namespace BeeTube.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Videos","Videos");
+     
         }
 
         public ActionResult About()

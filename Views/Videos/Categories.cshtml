@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Categories";
+}
+
+@model List<Category>
+
+
+<style>
+    
+    .category-card {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    .category-card h2 {
+        margin-top: 0;
+    }
+
+    .category-card p {
+        margin-bottom: 0;
+    }
+
+</style>
+
+<div class="category-container">
+    @foreach (var category in Model)
+    {
+
+        <div class="category-card" onclick="window.location.href='@Url.Action("CategoryVideos", "Videos", new { id = category.Id })'">
+            <h4>@category.Name</h4>
+            <p>@category.Description</p>
+        </div>
+
+    }
+    <div class="category-card" onclick="window.location.href='@Url.Action("Videos", "Videos", new {  })'">
+        <h4>All</h4>
+        <p>All the videos</p>
+    </div>
+</div>
+
+

@@ -11,6 +11,24 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
 </head>
 <body>
+    <style>
+      
+
+        body {
+            overflow: auto;
+            scrollbar-width: thin;  
+            -ms-overflow-style: none;  
+        }
+
+            body::-webkit-scrollbar {
+                width: 0px;  
+            }
+
+            body::-webkit-scrollbar-thumb {
+                background-color: #888;  
+            }
+
+    </style>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             @Html.ActionLink("BeeTube", "Videos", "Videos", new { area = "" }, new { @class = "navbar-brand" })
@@ -24,7 +42,7 @@
                     @*<li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
         <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
                     @*<li>@Html.ActionLink("Videos", "Videos", "Videos", new { area = "" }, new { @class = "nav-link" })</li>*@
-                    <li>@Html.ActionLink("Categories", "Categories", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Categories", "Categories", "Videos", new { area = "" }, new { @class = "nav-link" })</li>
 
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -33,17 +51,20 @@
                     }
                     </ul>
                  @Html.Partial("_LoginPartial")
-            </dixv>
+            </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div id="body" class="container body-content">
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - BeeTube</p>
         </footer>
     </div>
+    <script>
+       
 
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

@@ -317,6 +317,7 @@
     <Content Include="Views\Videos\Video.cshtml" />
     <Content Include="Views\Videos\UploadVideo.cshtml" />
     <Content Include="Views\Videos\UploadSuccess.cshtml" />
+    <Content Include="Views\Videos\Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

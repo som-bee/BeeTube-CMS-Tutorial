@@ -3,8 +3,56 @@
     ViewBag.Title = "Videos";
 }
 @model IEnumerable<BeeTube.Video>
+<style>
+    .category-container {
+        display: flex;
+        align-items: center;
+        margin-bottom:20px;
+    }
 
+        .category-container h4 {
+            margin-right: 10px;
+        }
+
+    .chng-category {
+        margin-left: auto;
+    }
+
+
+    .chng-category-link {
+        display: inline-block;
+        padding: 3px 20px;
+        background-color: #ffffff;
+        color: #333333;
+        text-decoration: none;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        font-family: Arial, sans-serif;
+        transition: background-color 0.3s ease;
+    }
+
+        .chng-category-link:hover {
+            background-color: #f2f2f2;
+        }
+
+        .chng-category-link:active {
+            background-color: #e6e6e6;
+        }
+
+   
+</style>
 <br />
+<div class="category-container">
+    <h5>Category: @ViewBag.VideoCategory</h5>
+    <div class="chng-category">
+        @Html.ActionLink("Change Category", "Categories", "Videos", new { area = "" }, new { @class = "chng-category-link" })
+    </div>
+</div>
+
+@*<h5 class="category-heading">Category : @ViewBag.VideoCategory </h5>
+<div class="chng-category">
+    @Html.ActionLink("Change Category", "Categories", "Videos", new { area = "" }, new { @class = "chng-category-link" })
+</div>*@
 
 
 <div class="row">
@@ -20,15 +68,15 @@
                     <p class="card-text">@video.Description</p>
                     <p>
                         @*@if (@video.User != null)
-                        {@video.User.UserName}
-                    else
-                    {
-                        string userName = "annonymous user "; @userName} on*@ @DateTime.Parse(@video.UploadDate.ToString()).ToString("D")
-                    </p>
-                    @*<p class="card-text"><small class="text-muted">@video.UploadDate</small></p>*@
+                                {@video.User.UserName}
+                            else
+                            {
+                                string userName = "annonymous user "; @userName} on*@ @DateTime.Parse(@video.UploadDate.ToString()).ToString("D")
+                            </p>
+                            @*<p class="card-text"><small class="text-muted">@video.UploadDate</small></p>*@
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    }
+            }
 </div>
 
