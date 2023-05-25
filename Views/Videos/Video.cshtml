@@ -112,23 +112,34 @@
 
     <p>@Model.Video.Description</p>
     <hr />
-    <div class="comments-section" >
-        <div class="comment-form comment-box">
-            @using (Html.BeginForm("AddComment", "Videos", FormMethod.Post, new { id = "addCommentForm" }))
-            {
-                //{Model.Comment.VideoID = Model.Video.Id;} <!-- Hidden field to store the video ID -->
-                @Html.HiddenFor(m => m.Comment.VideoID)
-                <div class="form-group">
-                    @Html.TextAreaFor(m => m.Comment.Content, new { @class = "form-control", rows = 1 ,placeholder = "Add a comment..." })
-                    @Html.ValidationMessageFor(m => m.Comment.Content)
-                </div>
+
+    <div class="comments-section">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="comment-form comment-box">
+                @using (Html.BeginForm("AddComment", "Videos", FormMethod.Post, new { id = "addCommentForm" }))
+                {
+                    //{Model.Comment.VideoID = Model.Video.Id;} <!-- Hidden field to store the video ID -->
+                    @Html.HiddenFor(m => m.Comment.VideoID)
+                    <div class="form-group">
+                        @Html.TextAreaFor(m => m.Comment.Content, new { @class = "form-control", rows = 1, placeholder = "Add a comment..." })
+                        @Html.ValidationMessageFor(m => m.Comment.Content)
+                    </div>
 
 
-                <div class="form-group">
-                    <input type="submit" value="Add Comment" class="btn btn-primary" />
-                </div>
-            }
-        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add Comment" class="btn btn-primary" />
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            
+            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    <p>Please login to add comments</p>
+    <hr />
+        }
         <br />
         <div id="commentSection">
             @foreach (var comment in Model.Comments)
@@ -140,7 +151,7 @@
                 </div>
             }
         </div>
-       
+
     </div>
 
 

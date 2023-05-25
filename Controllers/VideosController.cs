@@ -57,7 +57,7 @@ namespace BeeTube.Controllers
 
             }
         }
-
+        [Authorize]
         [HttpGet]
         [Route("video/upload")]
         public ActionResult UploadVideo()
@@ -74,7 +74,7 @@ namespace BeeTube.Controllers
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         [Route("video/upload")]
         public ActionResult UploadVideo(VideoUploadModel model)
@@ -134,7 +134,7 @@ namespace BeeTube.Controllers
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         [Route("video")]
         public ActionResult AddComment(VideoViewModel model)

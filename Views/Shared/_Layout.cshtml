@@ -25,9 +25,13 @@
         <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
                     @*<li>@Html.ActionLink("Videos", "Videos", "Videos", new { area = "" }, new { @class = "nav-link" })</li>*@
                     <li>@Html.ActionLink("Categories", "Categories", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Upload", "UploadVideo", "Videos", new { area = "" }, new { @class = "nav-link" })</li>
 
-                </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Upload", "UploadVideo", "Videos", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    }
+                    </ul>
                  @Html.Partial("_LoginPartial")
             </dixv>
         </div>
