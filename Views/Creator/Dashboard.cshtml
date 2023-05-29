@@ -1,4 +1,4 @@
-﻿@model BeeTube.UserProfile
+﻿@model BeeTube.Models.DashboardViewModel
 
 @{
     ViewBag.Title = "Dashboard";
@@ -7,87 +7,98 @@
     .row {
         margin-bottom: 20px; /* Adjust the value as needed */
     }
-
 </style>
 <div>
     <h4>Creator Profile</h4>
     <hr />
-        <div class="row">
-            <div class="col-md-2">
+    <div class="row">
+        <div class="col-md-2">
 
-                @Html.DisplayNameFor(model => model.FirstName) :
-
-            </div>
-            <div class="col-md-10">
-
-                @Html.DisplayFor(model => model.FirstName)
-
-            </div>
+            @Html.DisplayNameFor(model => model.UserProfile.FirstName) :
 
         </div>
-        <div class="row">
-            <div class="col-md-2">
+        <div class="col-md-10">
 
-
-                @Html.DisplayNameFor(model => model.LastName) :
-
-            </div>
-            <div class="col-md-10">
-
-                @Html.DisplayFor(model => model.LastName)
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-
-
-                @Html.DisplayNameFor(model => model.DOB) :
-
-            </div>
-            <div class="col-md-10">
-
-                @DateTime.Parse(@Model.DOB.ToString()).ToString("D")
-                @*@Html.DisplayFor(model => model.DOB)*@
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-
-
-                @Html.DisplayNameFor(model => model.Gender) :
-
-            </div>
-            <div class="col-md-10">
-
-                @Html.DisplayFor(model => model.Gender)
-
-            </div>
+            @Html.DisplayFor(model => model.UserProfile.FirstName)
 
         </div>
 
-        <div class="row">
-            <div class="col-md-2">
+    </div>
+    <div class="row">
+        <div class="col-md-2">
 
 
-                @Html.DisplayNameFor(model => model.Country) :
-
-            </div>
-            <div class="col-md-10">
-
-                @Html.DisplayFor(model => model.Country)
-
-            </div>
+            @Html.DisplayNameFor(model => model.UserProfile.LastName) :
 
         </div>
+        <div class="col-md-10">
+
+            @Html.DisplayFor(model => model.UserProfile.LastName)
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+
+
+            @Html.DisplayNameFor(model => model.UserProfile.DOB) :
+
+        </div>
+        <div class="col-md-10">
+
+            @DateTime.Parse(@Model.UserProfile.DOB.ToString()).ToString("D")
+            @*@Html.DisplayFor(model => model.DOB)*@
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+
+
+            @Html.DisplayNameFor(model => model.UserProfile.Gender) :
+
+        </div>
+        <div class="col-md-10">
+
+            @Html.DisplayFor(model => model.UserProfile.Gender)
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+
+
+            @Html.DisplayNameFor(model => model.UserProfile.Country) :
+
+        </div>
+        <div class="col-md-10">
+
+            @Html.DisplayFor(model => model.UserProfile.Country)
+
+        </div>
+
+    </div>
 
 
 
 
 </div>
 <p>
-    @Html.ActionLink("Edit Profile", "EditProfile", new { id = Model.Id })
+    @Html.ActionLink("Edit Profile", "EditProfile")
 </p>
+
+<br /><br />
+
+<h3>Creator Statistics</h3>
+
+<hr />
+<div>
+    <p>Total Videos: @Model.CreatorStatistics.TotalVideos  <a href="@Url.Action("Videos", "Creator")">View all</a></p>
+    <p>Total Views: @Model.CreatorStatistics.TotalViews</p>
+    <p>Total Subscribers: @Model.CreatorStatistics.TotalSubscribers</p>
+    <!-- Add more properties from the CreatorStatistics as needed -->
+</div>

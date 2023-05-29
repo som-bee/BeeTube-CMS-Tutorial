@@ -174,6 +174,12 @@
             @Html.TextBoxFor(model => model.VideoFile, new { type = "file" })
             @Html.ValidationMessageFor(model => model.VideoFile, "", new { @class = "text-danger" })
             <video id="video-preview" class="video-preview hidden" controls></video>
+            <div class="video-duration">
+                @Html.LabelFor(model => model.Duration, "Video Duration:", htmlAttributes: new { @class = "control-label" })
+                @Html.DisplayFor(model => model.Duration)
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new {type="time", @class = "form-control", id = "VideoDuration", @readonly = "readonly" } })
+                @*<p id="VideoDuration"></p>*@
+            </div>
         </div>
     </div>
     @*<div class="form-group">
@@ -248,14 +254,44 @@
                 reader.onload = function (e) {
                     video.src = e.target.result;
                     video.classList.remove("hidden");
+
+
+                    
                 };
 
                 reader.readAsDataURL(file);
+
+                video.addEventListener('loadedmetadata', function () {
+                      // Update the video duration
+                    console.log(video.duration);
+
+                    //
+                    var durationInSeconds = video.duration;
+                    var durationField = document.getElementById("VideoDuration");
+                   
+                    // Convert duration to the desired format (e.g., hh:mm:ss)
+                    var hours = Math.floor(durationInSeconds / 3600);
+                    var minutes = Math.floor((durationInSeconds % 3600) / 60);
+                    var seconds = Math.floor(durationInSeconds % 60);
+                    var milliseconds = Math.floor((durationInSeconds - Math.floor(durationInSeconds)) * 1000);
+
+
+                    var durationFormatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0") + "." + milliseconds.toString().padStart(3, "0");
+                    console.log(durationFormatted);
+                    // Set the value in the duration input field
+                    durationField.value = durationFormatted;
+                });
+      
             } else {
                 video.src = "";
                 video.classList.add("hidden");
             }
+
+
         });
+       
+       
+
         // Function to handle file input change event for thumbnail preview
         $("#ThumbnailFile").on("change", function (e) {
             var file = e.target.files[0];

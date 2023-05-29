@@ -10,6 +10,7 @@ using BeeTube.Models;
 using BeeTube;
 using Microsoft.AspNet.Identity;
 
+
 namespace BeeTube.Controllers
 {
     public class VideosController : Controller
@@ -83,7 +84,7 @@ namespace BeeTube.Controllers
             if(ModelState.IsValid)
             {
                 var videoModel = new BeeTube.Video();
-
+                TimeSpan videoDuration= TimeSpan.FromSeconds(0);
 
                 //store the uploaded video file
                 // Check if a file was uploaded
@@ -100,6 +101,28 @@ namespace BeeTube.Controllers
 
                     // Return the file path
                     videoModel.FilePath = "Uploads/video-files/" + fileName;
+
+                    ////getting video duration
+                    //string videoFilePath = "~/"+videoModel.FilePath;
+
+                    //using (var videoFile = new VideoFileReader())
+                    //{
+                    //    videoFile.Open(videoFilePath);
+
+                    //    // Get the duration in seconds
+                    //    double durationInSeconds = (double)(videoFile.FrameCount / videoFile.FrameRate);
+
+                    //    // Convert the duration to the desired format (e.g., TimeSpan)
+                    //    TimeSpan duration = TimeSpan.FromSeconds(durationInSeconds);
+
+                    //    // Use the duration as needed
+                    //    videoDuration = duration;
+                    //}
+
+
+
+
+
                 }
                 //store the uploaded video thumbnail file
                 if (model.ThumbnailFile != null && model.ThumbnailFile.ContentLength > 0)
@@ -123,14 +146,15 @@ namespace BeeTube.Controllers
                 videoModel.CategoryID = model.CategoryID;
                 videoModel.UploadDate = DateTime.Now;
                 videoModel.CreatorId = User.Identity.GetUserId();
+                videoModel.Duration = model.Duration;
 
                 using (var context = new BeeTubeEntities())
                 {
                     context.Videos.Add(videoModel);
                     context.SaveChanges();
                 }
-
-                return View("UploadSuccess");
+                return RedirectToAction("Videos", "Creator");
+                //return View("UploadSuccess");
             }
             return View();
         }

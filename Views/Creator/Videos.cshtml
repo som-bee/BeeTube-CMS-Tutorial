@@ -1,0 +1,94 @@
+﻿@model IEnumerable<BeeTube.Video>
+
+
+<style>
+    .video-preview,
+    .thumbnail-preview {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        max-height:200px;
+    }
+
+</style>
+
+<p>
+    @Html.ActionLink("Upload New", "UploadVideo", "Videos")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadDate)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.FilePath)*@
+            Video Preview
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.ThumbnailUrl)*@
+            Thumbnail Preview
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadDate)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.FilePath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThumbnailUrl)
+        </td>*@
+        <td>
+            <video controls class="video-preview">
+                <source src="~/@item.FilePath" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </td>
+
+        <td>
+            <img src="~/@item.ThumbnailUrl" alt="Thumbnail Preview" class="thumbnail-preview" />
+        </td>
+
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Category.Name)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.User.Email)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

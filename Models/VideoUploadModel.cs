@@ -25,7 +25,9 @@ namespace BeeTube.Models
 
         [Required]
         public HttpPostedFileBase VideoFile { get; set; }
-       
+
+        public Nullable<System.TimeSpan> Duration { get; set; }
+
 
     }
 
