@@ -334,6 +334,8 @@
     <Content Include="Views\Creator\Dashboard.cshtml" />
     <Content Include="Views\Creator\EditProfile.cshtml" />
     <Content Include="Views\Creator\Videos.cshtml" />
+    <Content Include="Views\Creator\VideoDetails.cshtml" />
+    <Content Include="Views\Creator\EditVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

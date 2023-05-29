@@ -29,10 +29,10 @@
         <th>
             @Html.DisplayNameFor(model => model.UploadDate)
         </th>
-        <th>
+        <!--<th>-->
             @*@Html.DisplayNameFor(model => model.FilePath)*@
-            Video Preview
-        </th>
+            <!--Video Preview
+        </th>-->
         <th>
             @*@Html.DisplayNameFor(model => model.ThumbnailUrl)*@
             Thumbnail Preview
@@ -55,8 +55,21 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Duration)
+            @{
+                if (item.Duration != null)
+                {
+                    var duration = (TimeSpan)item.Duration;
+                    var formattedDuration = duration.ToString(@"hh\:mm\:ss");
+                    @formattedDuration
+                }
+
+            }
+
         </td>
+
+        @*<td>
+            @Html.DisplayFor(modelItem => ((TimeSpan)item.Duration).ToString(@"hh\:mm\:ss"))
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.UploadDate)
         </td>
@@ -66,12 +79,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.ThumbnailUrl)
         </td>*@
-        <td>
-            <video controls class="video-preview">
-                <source src="~/@item.FilePath" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </td>
+    @*<td>
+       
+        <video controls class="video-preview">
+            <source src="~/@item.FilePath" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+
+    </td>*@
 
         <td>
             <img src="~/@item.ThumbnailUrl" alt="Thumbnail Preview" class="thumbnail-preview" />
@@ -84,9 +100,9 @@
             @Html.DisplayFor(modelItem => item.User.Email)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.ActionLink("Edit", "EditVideo", new { id = item.Id }) |
+            @Html.ActionLink("Details", "VideoDetails", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteVideo", new { id = item.Id })
         </td>
     </tr>
 }

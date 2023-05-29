@@ -10,7 +10,7 @@ namespace BeeTube.Models
     public class VideoUploadModel
     {
        
-       
+       public int Id {  get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -20,7 +20,7 @@ namespace BeeTube.Models
         [Required]
         public Nullable<int> CategoryID { get; set; }
 
-        [Required]
+        
         public HttpPostedFileBase ThumbnailFile { get; set; }
 
         [Required]

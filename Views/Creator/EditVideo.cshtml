@@ -1,0 +1,231 @@
+﻿@model BeeTube.Models.VideoUploadModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditVideo</title>
+
+    <style>
+        /* site.css */
+
+        .form-horizontal {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .btn-default {
+            background-color: #e62117;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+            .btn-default:hover {
+                background-color: #b9150f;
+            }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+            .back-link a {
+                color: #e62117;
+            }
+
+                .back-link a:hover {
+                    text-decoration: none;
+                }
+
+        .validation-summary-errors {
+            background-color: #f2dede;
+            color: #a94442;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ebccd1;
+            border-radius: 4px;
+        }
+
+            .validation-summary-errors ul {
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+            }
+
+            .validation-summary-errors li {
+                margin-bottom: 5px;
+            }
+
+        .video-preview {
+            height: 300px;
+            margin-top: 10px;
+        }
+
+        #video-preview {
+            width: 100%;
+        }
+
+
+        /* Style for thumbnail preview */
+        #thumbnail-preview {
+            width: auto;
+            max-height: 300px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+
+        /* Style for hidden elements */
+        .hidden {
+            display: none;
+        }
+        /* Adjust the width of the title field */
+        #Title {
+            width: 100%;
+            max-width: none;
+        }
+
+        /* Adjust the width of the description field */
+        #Description {
+            width: 100%;
+            max-width: none;
+        }
+
+        textarea {
+            max-width: none;
+        }
+    </style>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    @using (Html.BeginForm("EditVideo","Creator", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Video</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
+                @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
+                <!-- Thumbnail preview -->
+                <img id="thumbnail-preview" src="~/@ViewBag.ThumbnailUrl" alt="Thumbnail Preview" />
+
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
+                @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Videos")
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        
+        // Function to handle file input change event for thumbnail preview
+        $("#ThumbnailFile").on("change", function (e) {
+            var file = e.target.files[0];
+            var thumbnail = document.getElementById("thumbnail-preview");
+
+            // Check if the file is an image
+            if (file.type.match("image.*")) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    thumbnail.src = e.target.result;
+                    thumbnail.classList.remove("hidden");
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                thumbnail.src = "";
+                thumbnail.classList.add("hidden");
+            }
+        });
+    });
+
+    </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -88,8 +89,114 @@ namespace BeeTube.Controllers
 
             }
         }
+        [HttpGet]
+        public ActionResult VideoDetails(int id)
+        {
+
+            int videoId = id;
+            using (var context = new BeeTubeEntities())
+            {
+
+                // var video = context.Videos.Find(videoId);
+                //var comments = context.Comments.Where(c => c.VideoID == id).ToList();
+
+                var video = GetVideoByVideoId(videoId);
+
+                if(video.User.Id == User.Identity.GetUserId())
+                {
+                    var comments = GetCommentsByVideoId(videoId);
+
+                    // Create a view model to hold the video and comments
+                    var viewModel = new VideoViewModel
+                    {
+                        Video = video,
+                        Comments = comments,
+                    };
+
+                    return View(viewModel);
+                }
+                ViewBag.ErrorMsg = "Unauthozied action";
+                return View("Error");
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditVideo(int id)
+        {
+            int videoId = id;
+            using (var context = new BeeTubeEntities())
+            {
+                var video = GetVideoByVideoId(videoId);
+
+                if (video.User.Id == User.Identity.GetUserId())
+                {
+                    // Retrieve the list of categories from the database
+                    var categories = context.Categories.ToList();
+
+                    // Pass the list of categories to the view
+                    ViewBag.Categories = new SelectList(categories, "Id", "Name");
+                    ViewBag.ThumbnailUrl = video.ThumbnailUrl;
+
+                    VideoUploadModel videoModel = new VideoUploadModel()
+                    {
+                        Id= video.Id,
+                        Title = video.Title,
+                        Description = video.Description,
+                        CategoryID = video.CategoryID,
+   
+                    };
 
 
+
+                    return View(videoModel);
+                }
+                ViewBag.ErrorMsg = "Unauthozied action";
+                return View("Error");
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditVideo(VideoUploadModel model)
+        {
+            int videoId = model.Id;
+            using (var context = new BeeTubeEntities())
+            {
+                var video = context.Videos.Where(v => v.Id == videoId).FirstOrDefault();
+                if (video.User.Id == User.Identity.GetUserId())
+                {
+                   video.Title= model.Title;
+                    video.Description= model.Description;
+                    video.CategoryID = model.CategoryID;
+
+                    //store the uploaded video thumbnail file
+                    if (model.ThumbnailFile != null && model.ThumbnailFile.ContentLength > 0)
+                    {
+                        // Generate a unique filename for the uploaded file
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ThumbnailFile.FileName);
+
+                        // Specify the path where the file will be stored
+                        var filePath = Path.Combine(Server.MapPath("~/Uploads/video-thumbnails"), fileName);
+
+                        // Save the file to the specified path
+                        model.ThumbnailFile.SaveAs(filePath);
+
+                        // Return the file path
+                        video.ThumbnailUrl = "Uploads/video-thumbnails/" + fileName;
+                    }
+
+                    context.SaveChanges();
+
+
+
+                    return RedirectToAction("VideoDetails", new {id=video.Id});
+                }
+                ViewBag.ErrorMsg = "Unauthozied action";
+                return View("Error");
+
+            }
+        }
 
 
         private CreatorStatistics GetCreatorStatistics(string userId)
@@ -117,6 +224,46 @@ namespace BeeTube.Controllers
 
 
            
+        }
+
+        public Video GetVideoByVideoId(int videoId)
+        {
+            using (var context = new BeeTubeEntities())
+            {
+                var video = context.Videos.Where(v => v.Id == videoId).FirstOrDefault();
+
+                var user = context.Users.Where(u => u.Id == video.CreatorId).FirstOrDefault();
+
+                video.User = user;
+                return video;
+
+            }
+        }
+        public List<Comment> GetCommentsByVideoId(int videoId)
+        {
+            using (var context = new BeeTubeEntities())
+            {
+                var comments = context.Comments.Where(c => c.VideoID == videoId).ToList();
+                var userIds = comments.Select(c => c.UserID).Distinct().ToList();
+                var users = context.Users.Where(u => userIds.Contains(u.Id)).ToList();
+
+                var joinedComments = from c in comments
+                                     join u in users on c.UserID equals u.Id
+                                     select new Comment
+                                     {
+                                         Id = c.Id,
+                                         VideoID = c.VideoID,
+                                         UserID = c.UserID,
+                                         Content = c.Content,
+                                         CreatedAt = c.CreatedAt,
+                                         User = u
+                                     };
+                return joinedComments.ToList();
+
+            }
+
+
+
         }
 
 
