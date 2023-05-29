@@ -1,15 +1,10 @@
-﻿@model BeeTube.Models.VideoUploadModel
-
+﻿
 @{
-    Layout = null;
+    ViewBag.Title = "EditVideo";
 }
+@model BeeTube.Models.VideoUploadModel
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>EditVideo</title>
 
     <style>
         /* site.css */
@@ -130,102 +125,102 @@
             max-width: none;
         }
     </style>
-</head>
-<body>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
 
+    <div>
+        @Html.ActionLink("Go to Video List", "Videos") |
+        @Html.ActionLink("Go to Details", "VideoDetails", new { id = Model.Id })
+    </div>
+<br />
 
-    @using (Html.BeginForm("EditVideo","Creator", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditVideo", "Creator", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Video</h4>
-        <hr />
+        <div class="form-horizontal">
+            <h4>Edit Video</h4>
+            <hr />
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
 
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
-                @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
-                <!-- Thumbnail preview -->
-                <img id="thumbnail-preview" src="~/@ViewBag.ThumbnailUrl" alt="Thumbnail Preview" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
+                    @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
+                    <!-- Thumbnail preview -->
+                    <img id="thumbnail-preview" src="~/@ViewBag.ThumbnailUrl" alt="Thumbnail Preview" />
 
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
+                    @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
         </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
-                @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
-                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
     }
 
-    <div>
-        @Html.ActionLink("Back to List", "Videos")
-    </div>
 
     <script>
-    $(document).ready(function () {
-        
-        // Function to handle file input change event for thumbnail preview
-        $("#ThumbnailFile").on("change", function (e) {
-            var file = e.target.files[0];
-            var thumbnail = document.getElementById("thumbnail-preview");
+        $(document).ready(function () {
 
-            // Check if the file is an image
-            if (file.type.match("image.*")) {
-                var reader = new FileReader();
+            // Function to handle file input change event for thumbnail preview
+            $("#ThumbnailFile").on("change", function (e) {
+                var file = e.target.files[0];
+                var thumbnail = document.getElementById("thumbnail-preview");
 
-                reader.onload = function (e) {
-                    thumbnail.src = e.target.result;
-                    thumbnail.classList.remove("hidden");
-                };
+                // Check if the file is an image
+                if (file.type.match("image.*")) {
+                    var reader = new FileReader();
 
-                reader.readAsDataURL(file);
-            } else {
-                thumbnail.src = "";
-                thumbnail.classList.add("hidden");
-            }
+                    reader.onload = function (e) {
+                        thumbnail.src = e.target.result;
+                        thumbnail.classList.remove("hidden");
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    thumbnail.src = "";
+                    thumbnail.classList.add("hidden");
+                }
+            });
         });
-    });
 
     </script>
-</body>
-</html>
+

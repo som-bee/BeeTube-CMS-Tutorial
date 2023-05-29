@@ -157,6 +157,36 @@ namespace BeeTube.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult DeleteVideo(int id)
+        {
+            int videoId = id;
+            using (var dbContext = new BeeTubeEntities())
+            {
+                var video = dbContext.Videos.FirstOrDefault(v => v.Id == id);
+
+                if (video != null && video.User.Id == User.Identity.GetUserId())
+                {
+
+                  
+                        // Remove the video
+                        dbContext.Videos.Remove(video);
+
+                        // Remove the associated comments
+                        var comments = dbContext.Comments.Where(c => c.VideoID == id);
+                        dbContext.Comments.RemoveRange(comments);
+
+                        // Save the changes
+                        dbContext.SaveChanges();
+                   
+                    return RedirectToAction("Videos");
+                }
+                ViewBag.ErrorMsg = "Unauthozied action";
+                return View("Error");
+
+            }
+        }
+
         [HttpPost]
         public ActionResult EditVideo(VideoUploadModel model)
         {
@@ -198,6 +228,37 @@ namespace BeeTube.Controllers
             }
         }
 
+       
+
+        [HttpGet]
+        [Route("DeleteComment/{videoId}/{id}")]
+        public ActionResult DeleteComment(int id, int videoId)
+        {
+            using( var dbContext = new BeeTubeEntities())
+            {
+                // Retrieve the comment from the database based on the provided id
+                var comment = dbContext.Comments.FirstOrDefault(c => c.Id == id);
+
+                if (comment != null)
+                {
+                    // Remove the comment from the database
+                    dbContext.Comments.Remove(comment);
+                    dbContext.SaveChanges();
+
+                    // Optionally, perform any additional logic or processing
+
+                    // Redirect to the appropriate action or view
+                    return RedirectToAction("VideoDetails",new {id = videoId }); // Replace "Index" with the desired action name
+                }
+                else
+                {
+                    // Comment not found, handle the error or return a specific view
+                    return HttpNotFound();
+                }
+            }
+
+           
+        }
 
         private CreatorStatistics GetCreatorStatistics(string userId)
         {
