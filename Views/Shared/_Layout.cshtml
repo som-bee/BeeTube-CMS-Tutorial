@@ -46,7 +46,7 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Upload", "UploadVideo", "Videos", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Upload", "UploadVideo", "Creator", new { area = "" }, new { @class = "nav-link" })</li>
                         <li > @Html.ActionLink("Dashboard", "Dashboard", "Creator", new { area = "" }, new { @class = "nav-link" })</li>
 
                         }

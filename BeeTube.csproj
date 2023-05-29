@@ -328,7 +328,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Videos\Videos.cshtml" />
     <Content Include="Views\Videos\Video.cshtml" />
-    <Content Include="Views\Videos\UploadVideo.cshtml" />
+    <Content Include="Views\Creator\UploadVideo.cshtml" />
     <Content Include="Views\Videos\UploadSuccess.cshtml" />
     <Content Include="Views\Videos\Categories.cshtml" />
     <Content Include="Views\Creator\Dashboard.cshtml" />
