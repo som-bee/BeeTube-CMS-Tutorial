@@ -1,2 +1,2 @@
 # BeeTube-CMS-Tutorial
-Video Content platform demp project
+Video Content platform demo project
