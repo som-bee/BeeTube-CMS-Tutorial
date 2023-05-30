@@ -3,62 +3,106 @@
 @{
     ViewBag.Title = "Log in";
 }
+<style>
+    input {
+        max-width: 100%;
+    }
+    .login-page {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa; /* Change to your desired background color */
+    }
 
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <h4>Use a local account to log in.</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="row">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-                        <div class="col-md-10">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-md-2 col-md-10">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Customize the box shadow */
+        padding: 2.5rem; /* Increase the padding to add vertical spacing */
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem; /* Increase the margin-bottom to add vertical spacing */
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 1rem; /* Increase the margin-bottom to add vertical spacing */
+    }
+
+    .register-link {
+        color: #333;
+        text-decoration: none;
+        display: block; /* Add display block to separate the link from the button */
+        margin-top: 2rem; /* Increase the margin-top to add vertical spacing */
+    }
+
+        .register-link:hover {
+            color: #ff8800; /* Change to your desired hover color */
+        }
+
+    .btn-login {
+        width: 100%; /* Make the login button full-width */
+        
+        margin-top: 1.5rem; /* Increase the margin-top to add vertical spacing */
+    }
+
+       
+
+    .btn-register {
+        width: 100%; /* Make the register button full-width */
+       
+        margin-top: 1rem; /* Increase the margin-top to add vertical spacing */
+    }
+
+       
+</style>
+
+<main class="login-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">@ViewBag.Title</h2>
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", @class = "login-form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email)
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", autofocus = "autofocus" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
-                        </div>
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password)
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+                                    Remember me
+                                </label>
+                            </div>
+                            <button type="submit" class="btn  btn-block btn-login btn-outline-warning">Log in</button>
+                            <p class="text-center mt-3">
+                                <a href="@Url.Action("Register")" class="btn btn-block btn-register btn-outline-success">Register as a new user</a>
+                            </p>
+                        }
                     </div>
-                    <div class="row">
-                        <div class="offset-md-2 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-outline-dark" />
-                        </div>
-                    </div>
-                    <p>
-                        @Html.ActionLink("Register as a new user", "Register")
-                    </p>
-                    @* Enable this once you have account confirmation enabled for password reset functionality
-                        <p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>*@
-                }
-            </section>
-        </div>
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
+                </div>
+            </div>
         </div>
     </div>
 </main>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

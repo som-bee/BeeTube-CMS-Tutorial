@@ -4,32 +4,52 @@
     ViewBag.Title = "VideoDetails";
 }
 <style>
-    #thumbnail-preview{
-        max-height:300px;
+    #thumbnail-preview {
+        max-height: 300px;
     }
 </style>
 
 <div>
-    <h4>Video</h4>
+
+    <h4>Video Details</h4>
+    <hr />
+    <p class="mb-3 h5">Title: @Model.Video.Title</p>
+    <p class="mb-3">Description: @Model.Video.Description</p>
+    <p class="mb-3">Video Preview:</p>
+    <div class="embed-responsive embed-responsive-16by9 mb-3">
+        <video class="embed-responsive-item" controls style="max-height: 40vh;">
+            <source src="~/@Model.Video.FilePath" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <p class="mb-3">Thumbnail Preview:</p>
+    <img id="thumbnail-preview" src="~/@Model.Video.ThumbnailUrl" alt="Thumbnail Preview" class="img-fluid mb-3" />
+
+    @*<h5>Title : @Model.Video.Title</h5>
+        <h5>Description : @Model.Video.Description</h5>
+        <h5>Video Preview : </h5>
+        <video controls style="height: 40vh;">
+            <source src="~/@Model.Video.FilePath" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <h5>Thumbnail Preview : </h5>
+        <img id="thumbnail-preview" src="~/@Model.Video.ThumbnailUrl" alt="Thumbnail Preview" />
+        <br /><br />*@
+    <br /><br />
+    <h4>Video Actions</h4>
     <hr />
     <p>
-        @Html.ActionLink("Edit", "EditVideo", new { id = Model.Video.Id }) |
-        @Html.ActionLink("Delete", "DeleteVideo", new { id = Model.Video.Id }) |
-        @Html.ActionLink("Back to List", "Videos")
+        @Html.ActionLink("Back to List", "Videos", new { }, new { @class = "btn btn-outline-info" })
+        @Html.ActionLink("Edit", "EditVideo", new { id = Model.Video.Id }, new { @class = "btn btn-outline-warning" })
+        <a href="#" class="btn  btn-outline-danger" onclick="showDeleteConfirmation('@Model.Video.Id')">Delete</a>
+
+        @*@Html.ActionLink("Delete", "DeleteVideo", new { id = Model.Video.Id }, new { @class = "btn btn-danger", data_toggle = "modal", data_target = "#deleteConfirmationDialog" })*@
+        @*@Html.ActionLink("Delete", "DeleteVideo", new { id = Model.Video.Id })*@
+
     </p>
-    <br /><br />
-    <h5>Title : @Model.Video.Title</h5>
-    <h5>Description : @Model.Video.Description</h5>
-    <h5>Video Preview : </h5>
-    <video controls style="height: 40vh;">
-        <source src="~/@Model.Video.FilePath" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <h5>Thumbnail Preview : </h5>
-    <img id="thumbnail-preview" src="~/@Model.Video.ThumbnailUrl" alt="Thumbnail Preview" />
-    <br /><br />
-
+    <br />
     <h4>Comments</h4>
     <hr />
     <table class="table">
@@ -69,7 +89,9 @@
 
 
                 <td>
-                    @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id, videoId = comment.VideoID })
+                    @Html.ActionLink("Delete", "DeleteComment", new { id = comment.Id, videoId = comment.VideoID }, new { @class = "btn btn-outline-danger" })
+
+
                 </td>
 
 
@@ -77,5 +99,46 @@
         }
 
     </table>
+
+
+    <!-- Delete Confirmation Dialog -->
+    <div class="modal fade" id="deleteConfirmationDialog" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationDialogTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Video</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the video "@Model.Video.Title"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" onclick="closeDialog()">Cancel</button>
+                    <button class="btn btn-danger" onclick="deleteVideo(@Model.Video.Id)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+
+@section scripts {
+    <script>
+        function showDeleteConfirmation(videoId) {
+            var deleteUrl = '@Url.Action("DeleteVideo", "Video")/' + videoId;
+            $('#deleteConfirmationDialog').modal('show');
+            $('#deleteLink').attr('href', deleteUrl);
+        }
+
+         function deleteVideo(videoId) {
+        // Perform the actual deletion by redirecting to the DeleteVideoConfirmed action
+        window.location.href = '@Url.Action("DeleteVideo", "Creator", new { id = "__id__" })'.replace('__id__', videoId);
+    }
+
+    function closeDialog() {
+        // Close the dialog
+        console.log("dkjsdk")
+        $('#deleteConfirmationDialog').modal('hide');
+        $('#deleteConfirmationDialog').modal('hide');
+    }
+    </script>
+}

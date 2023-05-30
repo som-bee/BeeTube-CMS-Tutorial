@@ -3,39 +3,103 @@
     ViewBag.Title = "Register";
 }
 
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="row">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-outline-dark" />
-            </div>
-        </div>
+<style>
+    input {
+        max-width:100%;
     }
+    .registration-page {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa; /* Change to your desired background color */
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Customize the box shadow */
+        padding: 2.5rem; /* Increase the padding to add vertical spacing */
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem; /* Increase the margin-bottom to add vertical spacing */
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: .3rem; /* Increase the margin-bottom to add vertical spacing */
+    }
+
+    .btn-login {
+        width: 100%; /* Make the login button full-width */
+
+        margin-top: 1.5rem; /* Increase the margin-top to add vertical spacing */
+    }
+
+
+
+    .btn-register {
+        width: 100%; /* Make the register button full-width */
+
+        margin-top: 1rem; /* Increase the margin-top to add vertical spacing */
+    }
+
+</style>
+
+<main class="registration-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+
+                <div class="card">
+                    <div class="card-body">
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <h4 class="card-title">Create a new Account</h4>
+                            <hr />
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "col-md-3 col-form-label" })
+
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "col-md-3 col-form-label" })
+
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-6 col-form-label" })
+
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+
+                            </div>
+                            <br />
+                            <button type="submit" class="btn btn-block btn-register btn-outline-warning">Register</button>
+                            @*<div class="form-group row">
+                <div class="offset-md-2 col-md-10">
+                    <input type="submit" value="Register" class="btn btn-register" />
+                </div>
+            </div>*@
+                            <p class="text-center mt-3">
+                                <a href="@Url.Action("Login")" class="btn btn-block btn-login btn-outline-success">Log in</a>
+                            </p>
+
+                        }
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 @section Scripts {

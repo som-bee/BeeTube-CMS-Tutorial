@@ -7,7 +7,7 @@
 
 
 <style>
-    
+
     .category-card {
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -16,30 +16,78 @@
         cursor: pointer;
     }
 
-    .category-card h2 {
-        margin-top: 0;
-    }
+        .category-card h2 {
+            margin-top: 0;
+        }
 
-    .category-card p {
-        margin-bottom: 0;
-    }
+        .category-card p {
+            margin-bottom: 0;
+        }
+        .category-card.category-0 {
+            background-color: #FF7675; /* Coral */
+        }
+
+        .category-card.category-1 {
+            background-color: #74B9FF; /* Sky Blue */
+        }
+
+        .category-card.category-2 {
+            background-color: #FFEAA7; /* Apricot */
+        }
+
+        .category-card.category-3 {
+            background-color: #55E6C1; /* Mint Green */
+        }
+
+        .category-card.category-4 {
+            background-color: #FDA7DF; /* Lavender Pink */
+        }
+
+        .category-card.category-5 {
+            background-color: #FFC312; /* Sunflower Yellow */
+        }
+
+        .category-card.category-6 {
+            background-color: #A3CB38; /* Lime Green */
+        }
+
+        .category-card.category-7 {
+            background-color: #6C5CE7; /* Purple */
+        }
+
+    /*
+
 
 </style>
 
-<div class="category-container">
-    @foreach (var category in Model)
-    {
+@*<div class="category-container">
+        @foreach (var category in Model)
+        {
 
-        <div class="category-card" onclick="window.location.href='@Url.Action("CategoryVideos", "Videos", new { id = category.Id })'">
-            <h4>@category.Name</h4>
-            <p>@category.Description</p>
+            <div class="category-card" onclick="window.location.href='@Url.Action("CategoryVideos", "Videos", new { id = category.Id })'">
+                <h4>@category.Name</h4>
+                <p>@category.Description</p>
+            </div>
+
+        }
+        <div class="category-card" onclick="window.location.href='@Url.Action("Videos", "Videos", new {  })'">
+            <h4>All</h4>
+            <p>All the videos</p>
         </div>
-
+    </div>*@
+<div class="category-container">
+    @foreach (var category in Model.Select((value, index) => new { Index = index, Value = value }))
+    {
+        <div class="category-card category-@category.Index" onclick="window.location.href='@Url.Action("CategoryVideos", "Videos", new { id = category.Value.Id })'">
+            <h4>@category.Value.Name</h4>
+            <p>@category.Value.Description</p>
+        </div>
     }
-    <div class="category-card" onclick="window.location.href='@Url.Action("Videos", "Videos", new {  })'">
+    <div class="category-card category-5" onclick="window.location.href='@Url.Action("Videos", "Videos", new {  })'">
         <h4>All</h4>
         <p>All the videos</p>
     </div>
 </div>
+
 
 

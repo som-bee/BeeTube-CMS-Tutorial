@@ -97,10 +97,18 @@
 
 <div>
 
-    <video controls style="height: 80vh;">
-        <source src="@Model.Video.FilePath" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    @*<video controls style="height: 80vh;">
+            <source src="@Model.Video.FilePath" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>*@
+    <div class="text-center">
+        <video controls style="height: 80vh;">
+            <source src="@Model.Video.FilePath" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+
     <h4>@Model.Video.Title</h4>
     <p>
         @if (@Model.Video.User != null)
@@ -128,17 +136,22 @@
 
 
                     <div class="form-group">
-                        <input type="submit" value="Add Comment" class="btn btn-primary" />
+                        <button type="submit" class="btn btn-outline-warning">
+                            @*<i class="fas fa-comment"></i>*@
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
                     </div>
+
+
                 }
             </div>
         }
         else
         {
-            
-            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    <p>Please login to add comments</p>
-    <hr />
+
+            @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" , @class="btn btn-outline-warning"})
+            <p>Please login to add comments</p>
+            <hr />
         }
         <br />
         <div id="commentSection">

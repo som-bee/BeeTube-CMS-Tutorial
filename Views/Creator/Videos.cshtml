@@ -13,8 +13,8 @@
 </style>
 
 <p>
-    @Html.ActionLink("Upload New", "UploadVideo", "Creator") | 
-    @Html.ActionLink("Go to Dashboard", "Dashboard", "Creator")
+    @Html.ActionLink("Upload New", "UploadVideo", "Creator", new { @class = "btn btn-outline-success" }) 
+    @Html.ActionLink("Go to Dashboard", "Dashboard", "Creator", new { @class = "btn btn-outline-info" })
 </p>
 <table class="table">
     <tr>
@@ -44,7 +44,9 @@
         <th>
             @Html.DisplayNameFor(model => model.User.Email)
         </th>*@
-        <th></th>
+        <th>
+            Action
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -100,11 +102,13 @@
         @*<td>
             @Html.DisplayFor(modelItem => item.User.Email)
         </td>*@
-        <td>
-            @Html.ActionLink("Edit", "EditVideo", new { id = item.Id }) |
-            @Html.ActionLink("Details", "VideoDetails", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "DeleteVideo", new { id = item.Id })
-        </td>
+    <td>
+        @*@Html.ActionLink("Edit", "EditVideo", new { id = item.Id }) |*@
+        @Html.ActionLink("Open", "VideoDetails", new { id = item.Id }, new { @class = "btn btn-outline-warning" })
+        
+
+        @*@Html.ActionLink("Delete", "DeleteVideo", new { id = item.Id })*@
+    </td>
     </tr>
 }
 

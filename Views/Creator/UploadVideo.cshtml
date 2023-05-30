@@ -85,7 +85,6 @@
         }
 
     .video-preview {
-       
         height: 300px;
         margin-top: 10px;
     }
@@ -94,13 +93,13 @@
         width: 100%;
     }
 
-   
+
     /* Style for thumbnail preview */
     #thumbnail-preview {
-        width:100%;
-       /* max-width: 100%;
+        width: 100%;
+        /* max-width: 100%;
         max-height: 200px;*/
-        margin-top:10px;
+        margin-top: 10px;
         margin-bottom: 10px;
         object-fit: contain;
     }
@@ -120,122 +119,123 @@
         width: 100%;
         max-width: none;
     }
+
     textarea {
         max-width: none;
     }
-
 </style>
 
 
+<div>
+    @Html.ActionLink("Go to Dashboard", "Dashboard", "Creator", new { @class = "btn btn-outline-info" })
+</div>
+<br />
 
 
 @using (Html.BeginForm("UploadVideo", "Creator", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Video Upload</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="form-horizontal">
+        <h4>Video Upload</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
-        </div>*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.VideoFile, "Video File (mp4)", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.VideoFile, new { type = "file" })
-            @Html.ValidationMessageFor(model => model.VideoFile, "", new { @class = "text-danger" })
-            <video id="video-preview" class="video-preview hidden" controls></video>
-            <div class="video-duration">
-                @Html.LabelFor(model => model.Duration, "Video Duration:", htmlAttributes: new { @class = "control-label" })
-                @Html.DisplayFor(model => model.Duration)
-                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new {type="time", @class = "form-control", id = "VideoDuration", @readonly = "readonly" } })
-                @*<p id="VideoDuration"></p>*@
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.UploadDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UploadDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UploadDate, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.VideoFile, "Video File (mp4)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.VideoFile, new { type = "file" })
+                @Html.ValidationMessageFor(model => model.VideoFile, "", new { @class = "text-danger" })
+                <video id="video-preview" class="video-preview hidden" controls></video>
+                <div class="video-duration">
+                    @Html.LabelFor(model => model.Duration, "Video Duration:", htmlAttributes: new { @class = "control-label" })
+                    @Html.DisplayFor(model => model.Duration)
+                    @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { type = "time", @class = "form-control", id = "VideoDuration", @readonly = "readonly" } })
+                    @*<p id="VideoDuration"></p>*@
+                </div>
+            </div>
+        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
+                @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.ThumbnailUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ThumbnailUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ThumbnailUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
+                @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
+                <!-- Thumbnail preview -->
+                <img id="thumbnail-preview" src="#" alt="Thumbnail Preview" class="hidden" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="btn btn-outline-danger" />
             </div>
         </div>
     </div>
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FilePath, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
-            @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
-            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-           
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.ThumbnailUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThumbnailUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThumbnailUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
-            @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
-            <!-- Thumbnail preview -->
-            <img id="thumbnail-preview" src="#" alt="Thumbnail Preview" class="hidden" />
-   
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Upload" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
-<div>
-    @Html.ActionLink("Go to Dashboard", "Dashboard","Creator" )
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -256,19 +256,19 @@
                     video.classList.remove("hidden");
 
 
-                    
+
                 };
 
                 reader.readAsDataURL(file);
 
                 video.addEventListener('loadedmetadata', function () {
-                      // Update the video duration
+                    // Update the video duration
                     console.log(video.duration);
 
                     //
                     var durationInSeconds = video.duration;
                     var durationField = document.getElementById("VideoDuration");
-                   
+
                     // Convert duration to the desired format (e.g., hh:mm:ss)
                     var hours = Math.floor(durationInSeconds / 3600);
                     var minutes = Math.floor((durationInSeconds % 3600) / 60);
@@ -281,7 +281,7 @@
                     // Set the value in the duration input field
                     durationField.value = durationFormatted;
                 });
-      
+
             } else {
                 video.src = "";
                 video.classList.add("hidden");
@@ -289,8 +289,8 @@
 
 
         });
-       
-       
+
+
 
         // Function to handle file input change event for thumbnail preview
         $("#ThumbnailFile").on("change", function (e) {

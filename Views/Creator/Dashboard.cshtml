@@ -88,7 +88,7 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit Profile", "EditProfile")
+    @Html.ActionLink("Edit Profile", "EditProfile",new { } ,new { @class = " btn btn-outline-danger" })
 </p>
 
 <br /><br />
@@ -97,7 +97,7 @@
 
 <hr />
 <div>
-    <p>Total Videos: @Model.CreatorStatistics.TotalVideos  <a href="@Url.Action("Videos", "Creator")">View all</a></p>
+    <p>Total Videos: @Model.CreatorStatistics.TotalVideos  <a href="@Url.Action("Videos", "Creator")" class = " btn btn-outline-info">View all</a></p>
     <p>Total Views: @Model.CreatorStatistics.TotalViews</p>
     <p>Total Subscribers: @Model.CreatorStatistics.TotalSubscribers</p>
     <!-- Add more properties from the CreatorStatistics as needed -->

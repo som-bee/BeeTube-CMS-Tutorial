@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace BeeTube.Controllers
 {
@@ -260,16 +261,34 @@ namespace BeeTube.Controllers
         [HttpGet]
         public ActionResult DeleteVideo(int id)
         {
-            int videoId = id;
+            //int videoId = id;
+            //using (var dbContext = new BeeTubeEntities())
+            //{
+            //    var video = dbContext.Videos.FirstOrDefault(v => v.Id == id);
+
+            //    if (video != null && video.User.Id == User.Identity.GetUserId())
+            //    {
+
+            //        return PartialView("_DeleteConfirmation", video);
+
+
+            //    }
+            //    ViewBag.ErrorMsg = "Unauthozied action";
+            //    return View("Error");
+
+            //}
             using (var dbContext = new BeeTubeEntities())
             {
                 var video = dbContext.Videos.FirstOrDefault(v => v.Id == id);
-
                 if (video != null && video.User.Id == User.Identity.GetUserId())
                 {
+
+
+                    // Delete the video and associated files
+                    // ...
                     //removing video and thunail files
                     // Remove the video file
-                    var videoFilePath = Server.MapPath("~/"+video.FilePath);
+                    var videoFilePath = Server.MapPath("~/" + video.FilePath);
                     if (System.IO.File.Exists(videoFilePath))
                     {
                         System.IO.File.Delete(videoFilePath);
@@ -285,20 +304,24 @@ namespace BeeTube.Controllers
                     // Remove the video
                     dbContext.Videos.Remove(video);
 
-                        // Remove the associated comments
-                        var comments = dbContext.Comments.Where(c => c.VideoID == id);
-                        dbContext.Comments.RemoveRange(comments);
+                    // Remove the associated comments
+                    var comments = dbContext.Comments.Where(c => c.VideoID == id);
+                    dbContext.Comments.RemoveRange(comments);
 
-                        // Save the changes
-                        dbContext.SaveChanges();
-                   
+                    // Save the changes
+                    dbContext.SaveChanges();
+
                     return RedirectToAction("Videos");
+
+
                 }
                 ViewBag.ErrorMsg = "Unauthozied action";
                 return View("Error");
 
+
             }
         }
+       
 
         [HttpPost]
         public ActionResult EditVideo(VideoUploadModel model)

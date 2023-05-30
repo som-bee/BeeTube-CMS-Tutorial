@@ -7,7 +7,7 @@
     .category-container {
         display: flex;
         align-items: center;
-        margin-bottom:20px;
+        margin-bottom: 20px;
     }
 
         .category-container h4 {
@@ -39,44 +39,57 @@
             background-color: #e6e6e6;
         }
 
-   
+    background-color: #F2F2F2; /* Light Gray */
+    border: 1px solid #CCCCCC; /* Gray */
+    }
+
+    .video-card .card-title {
+        color: #333333; /* Dark Gray */
+    }
+
+    .upload-info .upload-date {
+        background-color: #E6E6E6; /* Light Gray */
+        color: #666666; /* Medium Gray */
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
 </style>
 <br />
 <div class="category-container">
-    <h5>Category: @ViewBag.VideoCategory</h5>
+    @*<h5 class="category-label category-6">Category: @ViewBag.VideoCategory</h5>*@
+    @Html.ActionLink("Category: " + (string)@ViewBag.VideoCategory, "Categories", "Videos", new { area = "" }, new { @class = " btn btn-outline-warning" })
+    @*<h5>Category: @ViewBag.VideoCategory</h5>*@
     <div class="chng-category">
-        @Html.ActionLink("Change Category", "Categories", "Videos", new { area = "" }, new { @class = "chng-category-link" })
+
     </div>
+
+
+
 </div>
 
 @*<h5 class="category-heading">Category : @ViewBag.VideoCategory </h5>
-<div class="chng-category">
-    @Html.ActionLink("Change Category", "Categories", "Videos", new { area = "" }, new { @class = "chng-category-link" })
-</div>*@
+    <div class="chng-category">
+        @Html.ActionLink("Change Category", "Categories", "Videos", new { area = "" }, new { @class = "chng-category-link" })
+    </div>*@
+
 
 
 <div class="row">
     @foreach (var video in Model)
     {
         <div class="col-md-4">
-            <div class="card mb-4">
+            <div class="card mb-4 video-card">
                 <a href="~/video?id=@video.Id">
                     <img src="/@video.ThumbnailUrl" class="card-img-top" alt="Video Thumbnail">
                 </a>
                 <div class="card-body">
                     <h5 class="card-title">@video.Title</h5>
                     <p class="card-text">@video.Description</p>
-                    <p>
-                        @*@if (@video.User != null)
-                                {@video.User.UserName}
-                            else
-                            {
-                                string userName = "annonymous user "; @userName} on*@ @DateTime.Parse(@video.UploadDate.ToString()).ToString("D")
-                            </p>
-                            @*<p class="card-text"><small class="text-muted">@video.UploadDate</small></p>*@
-                        </div>
-                    </div>
+                    <p class="card-text upload-info">
+                        <span class="upload-date">@DateTime.Parse(@video.UploadDate.ToString()).ToString("D")</span>
+                    </p>
                 </div>
-            }
+            </div>
+        </div>
+    }
 </div>
-

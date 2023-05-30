@@ -129,73 +129,83 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
 
-    <div>
-        @Html.ActionLink("Go to Video List", "Videos") |
-        @Html.ActionLink("Go to Details", "VideoDetails", new { id = Model.Id })
-    </div>
+<div>
+    @Html.ActionLink("Go to Details", "VideoDetails", new { id = Model.Id }, new { @class = "btn btn-outline-info" })
+    @Html.ActionLink("Go to Video List", "Videos", new { }, new { @class = "btn btn-outline-info" })
+
+</div>
 <br />
 
     @using (Html.BeginForm("EditVideo", "Creator", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>Edit Video</h4>
-            <hr />
+<div class="form-horizontal">
+    <h4>Edit Video</h4>
+    <hr />
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
-                    @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
-                    <!-- Thumbnail preview -->
-                    <img id="thumbnail-preview" src="~/@ViewBag.ThumbnailUrl" alt="Thumbnail Preview" />
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
 
 
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
-                    @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
-                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThumbnailFile, "Thumbnail File (jpg)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.ThumbnailFile, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.ThumbnailFile, "", new { @class = "text-danger" })
+            <!-- Thumbnail preview -->
+            <img id="thumbnail-preview" src="~/@ViewBag.ThumbnailUrl" alt="Thumbnail Preview" />
 
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
         </div>
-    }
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CategoryID, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CategoryID, ViewBag.Categories as SelectList, "-- Select Category --", new { @class = "form-control" })
+            @*@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })*@
+            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-1">
+                @Html.ActionLink("Cancel", "VideoDetails", new { id = Model.Id }, new { @class = "btn  btn-outline-success" })
+                @*<a href="@Url.Action("VideoDetails")" class="btn btn-outline-success">Cancel</a>*@
+            </div>
+            <div class="col-md-1">
+                <input type="submit" value="Save" class="btn btn-outline-danger" />
+            </div>
+            @*<div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-outline-danger" />
+                </div>*@
+        </div>
+    </div>
+</div>
+    }
+            
 
     <script>
         $(document).ready(function () {
